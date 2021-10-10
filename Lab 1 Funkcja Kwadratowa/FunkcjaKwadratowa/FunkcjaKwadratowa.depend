@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1633890489 source:c:\users\adam\documents\studia programowanie podstawa codebloks\funkcjakwadratowa\main.cpp
+	<iostream>
+	<math.h>
+
