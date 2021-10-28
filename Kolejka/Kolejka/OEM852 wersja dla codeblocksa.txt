@@ -1,0 +1,348 @@
+//#include "pch.h"
+#include <queue>
+#include <iostream>
+#include <string>
+#include <conio.h>
+#include <algorithm>   
+#include <vector> 
+#include <cstdlib>
+#include <locale.h>
+#include <fstream>
+
+using namespace std;
+
+fstream plik;
+queue < int > kolejkaLiczb;
+
+int liczba, liczba1, liczba2, liczba3, liczba4;
+int Random()
+{ 
+	return (rand() % 100); 
+}
+
+//pozostaˆa cz©˜† wiedzy z syllabusa
+
+void Zaliczenie(string Zaliczenie_imie, string Zaliczenie_nazwisko, int Zaliczenie_rok_urodzenia, double Zaliczenie_srednia_ocen, double Zaliczenie_wymagana_srednia)
+{
+	cout << "Oto dane studenta" << endl;
+	cout << "Imi©: " << Zaliczenie_imie << endl;
+	cout << "Nazwisko: " << Zaliczenie_nazwisko << endl;
+	cout << "Rok Urodzenia: " << Zaliczenie_rok_urodzenia << endl;
+	cout << "—rednia ocen: " << Zaliczenie_srednia_ocen << endl;
+	if (Zaliczenie_wymagana_srednia <= Zaliczenie_srednia_ocen)
+	{
+		cout << "Student zaliczyˆ " << endl << endl;
+	}
+	else if (Zaliczenie_wymagana_srednia > Zaliczenie_srednia_ocen)
+	{
+		cout << "Student nie zaliczyˆ " << endl << endl;
+	}
+	else
+	{
+		cout << "Podano zˆe dane " << endl << endl;
+	}
+}
+
+void Inne()
+{
+	//specjalnie niedefiniowanie wszystkiego na pocz¥tku na cele prezentacji
+	double wymaganaSrednia = 3.5;
+
+	struct student {
+		string imie;
+		string nazwisko;
+		int rok_urodzenia;
+		double srednia_ocen;
+		string tytul = "student";
+
+	};
+	struct nauczyciel {
+		string imie;
+		string nazwisko;
+		int rok_urodzenia;
+		double srednia_ocen;
+		string tytul = "nauczyciel";
+	};
+
+
+	student student1 = { "Zbigniew","Guminski",2002,4.3 };
+	nauczyciel nauczyciel1 = { "Jan","Wodecki",1970};  //nie musz© podawa† wszystkich danych
+
+	cout << "Kr¢tki test struktury" << endl << endl;
+	Zaliczenie(student1.imie, student1.nazwisko, student1.rok_urodzenia, student1.srednia_ocen, wymaganaSrednia);
+
+	system("PAUSE");
+	system("cls");
+
+	cout << "Podaj prosz© dane dla nowego student: Imie, Nazwisko, rok urodzenia, ˜rednia jego ocen." << endl << endl;
+	student student2;
+	cin >> student2.imie >> student2.nazwisko >> student2.rok_urodzenia >> student2.srednia_ocen;
+	Zaliczenie(student2.imie, student2.nazwisko, student2.rok_urodzenia, student2.srednia_ocen, wymaganaSrednia);
+
+	system("PAUSE");
+	system("cls");
+
+	cout << "Przykˆad unikni©cia kolizji:" << endl << endl;
+	cout << "Tytuˆ studenta:" << student1.tytul << endl; 
+	cout << "Tytuˆ nauczyciela:" << nauczyciel1.tytul << endl; //ta sama zmienna tytul ale dzieki strukturze i podaniu ˜cie¾ki unikamy kolizji (przykˆad rigidbody.velocity)
+
+	system("PAUSE");
+	system("cls");
+
+	struct data_pola_bitowe {
+		unsigned int dni : 5; // 0-31
+		unsigned int miesiace : 4; //0-15
+		int lata : 12; //2048 p.n.e - 2047 n.e
+	}; //zajmuje ˆ¥cznie 21 bit¢w zamiast 96 bit¢w
+
+	data_pola_bitowe data;
+	cout << "Pola bitowe zmniejszaj¥ ilo˜† wykorzystywanej pami©ci ale nie blokuj¥ przed bˆ©dami." << endl << endl;
+	data.dni = 31;  //maksymalna wartos† dla typu unsigned int na 5 bitach
+	cout << data.dni << endl;
+	data.dni = 32;  //przekroczony zakres
+	cout << data.dni << endl;
+
+
+	int wybor;
+	do
+	{
+		system("PAUSE");
+		system("cls");
+		cout << "Wci˜nij cyfr© 0, ¾eby wr¢ci† do menu ";
+		cin >> wybor;
+		system("cls");
+	} while (wybor != 0);
+
+	
+}
+
+//kolejka
+
+void TworzenieKolejki()
+{
+	cout << "Podaj 5 liczb: ";
+	cin >> liczba >> liczba1 >> liczba2 >> liczba3 >> liczba4;
+
+	kolejkaLiczb.push(liczba);
+	kolejkaLiczb.push(liczba1);
+	kolejkaLiczb.push(liczba2);
+	kolejkaLiczb.push(liczba3);
+	kolejkaLiczb.push(liczba4);
+
+
+	cout << "Pierwsza liczba w kolejce to: " << kolejkaLiczb.front() << endl;
+
+	cout << "Ostatnia liczba w kolejce to: " << kolejkaLiczb.back() << endl;
+
+	cout << "W kolejce znajduje sie " << kolejkaLiczb.size() << " liczb." << endl;
+	_getch();
+	system("cls");
+}
+
+void display_menu_operations()
+{
+	int wybor;
+	int ilosc_posortowanych_liczb;
+	int n_element_posortowanych_liczb;
+	int czestotliwosc_count;
+	int ilosc_elementow_do_zerowania;
+	int ilosc_zerowania = 0;
+
+	int tabint[] = { liczba, liczba1, liczba2, liczba3, liczba4 };
+
+
+	vector<int> vektor(tabint, tabint + 5);
+
+	auto result = minmax_element(vektor.begin(), vektor.end());
+
+	do
+	{
+		cout << "Co chcesz wy˜wietli†?" << endl;
+		cout << "1.Sortowanie calosci" << endl;  
+		cout << "2.Sortowanie pierwszych wybranych paru liczb" << endl; 
+		cout << "3.Sortowanie n-tego elementu" << endl; 
+		cout << "4.Sortowanie poprzez permutacje" << endl; 
+		cout << "5.Waro˜ci min-max" << endl; 
+		cout << "6.Liczenie ile razy pojawiˆa si© dana liczba" << endl; 
+		cout << "7.Wygeneruj nowy zespoˆ liczb" << endl; //
+		cout << "8.Wy˜wietl liczby" << endl; //
+		cout << "9.Dodaj liczby z pami©ci podr©cznej do kolejki." << endl;
+		cout << "10. Wyzeruj kolejk©" << endl;
+		cout << "11. Zapisz kolejk© do pliku" << endl;
+		cout << "12. Wr¢† do menu" << endl;
+		cout << "Wybieram : ";
+		cin >> wybor;
+		system("cls");
+
+		queue<int> kopiaKolejki = kolejkaLiczb;
+		switch (wybor)
+		{
+		case 1:
+			sort(vektor.begin(), vektor.begin() + kolejkaLiczb.size());
+			for (vector<int>::iterator it = vektor.begin(); it != vektor.end(); ++it)
+				cout << ' ' << *it;
+			cout << '\n';  //dziala
+			break;
+		case 2:
+
+			cout << "Ile pierwszych liczb chcesz posortowa†?" << endl;
+			cin >> ilosc_posortowanych_liczb;			
+
+			partial_sort(vektor.begin(), vektor.begin() + ilosc_posortowanych_liczb, vektor.end());
+			for ( vector<int>::iterator it = vektor.begin(); it != vektor.end(); ++it)
+				 cout << ' ' << *it;
+			 cout << '\n'; //dziala 
+			break;
+		case 3:
+			cout << "Kt¢ry element usortowa†?" << endl;
+			cin >> n_element_posortowanych_liczb;
+			nth_element(vektor.begin(), vektor.begin() + n_element_posortowanych_liczb, vektor.end());
+			for ( vector<int>::iterator it = vektor.begin(); it != vektor.end(); ++it)
+				 cout << ' ' << *it; //nie jestem pewien czy dziaˆa? Bo speˆnia funkcje nth_element ale r¢wnie¾ sortuje caˆo˜ciowo
+			 cout << '\n';
+			break;
+		case 4:
+			do {
+				prev_permutation(vektor.begin(), vektor.end());
+			} while (!is_sorted(vektor.begin(), vektor.end()));
+			for (vector<int>::iterator it = vektor.begin(); it != vektor.end(); ++it)
+				cout << ' ' << *it;			//dziaˆa
+			break;
+		case 5: 
+			cout << "Minimalnym elementem jest " << *min_element(vektor.begin(), vektor.end());
+			cout << " na pozycji " << (min_element(vektor.begin(), vektor.end()) - vektor.begin()) << '\n';
+			cout << "Maksymalnym elementem jest " << *max_element(vektor.begin(), vektor.end());
+			cout << " na pozycji " << (max_element(vektor.begin(), vektor.end()) - vektor.begin()) << '\n';
+			/*
+			cout << "Minimalnym elementem jest " << *result.first;
+			cout << " na pozycji " << (result.first - vektor.begin()) << '\n';
+			cout << "Maksymalnym elementem jest " << *result.second;
+			cout << " na pozycji " << (result.second - vektor.begin()) << '\n';  //pami©† podr©czna
+			*/
+			break;
+		case 6:
+			cout << "Cz©stotliwo˜† jakiej liczby zmierzy†?" << endl;
+			cin >> czestotliwosc_count;
+			 cout << czestotliwosc_count << "pojawia si© " << count(vektor.begin(), vektor.end(), czestotliwosc_count) << " razy.\n";
+			break;
+		case 7:
+			generate(vektor.begin(), vektor.end(), Random);
+			for ( vector<int>::iterator it = vektor.begin(); it != vektor.end(); ++it)
+				 cout << ' ' << *it;  //dziaˆa
+			 cout << '\n';
+
+			break;
+		case 8:
+
+			while (!kolejkaLiczb.empty()) {
+				cout << " " << kolejkaLiczb.front();
+				kolejkaLiczb.pop();
+			}
+			kolejkaLiczb = kopiaKolejki;
+			/*
+			for (vector<int>::iterator it = vektor.begin(); it != vektor.end(); ++it)
+				cout << ' ' << *it;  //dziaˆa
+				*/
+			break;
+		case 9:
+			kolejkaLiczb.push(vektor[0]);
+			kolejkaLiczb.push(vektor[1]);
+			kolejkaLiczb.push(vektor[2]);
+			kolejkaLiczb.push(vektor[3]);
+			kolejkaLiczb.push(vektor[4]);
+			cout << "Dane zostaˆy wprowadzone do kolejki " << '\n';  //dziaˆa
+			cout << "W kolejce znajduje sie " << kolejkaLiczb.size() << " liczb." << endl;
+			break;
+		case 10:
+			while (kolejkaLiczb.empty() == false)
+			{
+				kolejkaLiczb.pop();
+			}			
+			cout << "Kolejka zostaˆa wyzerowana" << '\n';
+			break;
+		case 11:
+			plik.open("ZapisKolejki.txt", ios::out | ios::app);
+
+			if (plik.good())
+			{
+				while (!kolejkaLiczb.empty()) {
+					plik << " " << kolejkaLiczb.front();
+					kolejkaLiczb.pop();
+				}
+				plik << endl;
+				cout << "Dane zostaˆy pomy˜lnie zapisane " << '\n';  
+			}
+			else
+			{
+				cout << "Bˆ¥d zapisu danych " << '\n';  
+			}
+			plik.close();
+
+			kolejkaLiczb = kopiaKolejki;
+
+			break;		
+		case 12:
+			break;
+		}
+		system("PAUSE");
+		system("cls");
+	} while (wybor != 12);
+
+}
+
+//gˆ¢wne menu
+
+void display_menu()
+{
+	int wybor;
+	do
+	{
+		cout << "*******************GLOWNE MENU********************" << endl;
+		cout << "1.Kolejka " << endl;
+		cout << "2.Reszta materiaˆu z wykazu" << endl;
+		cout << "3.Wyjscie z programu." << endl;
+		cout << "Wybieram : ";
+		cin >> wybor;
+		system("cls");
+
+
+		switch (wybor)
+		{
+		case 1:
+			TworzenieKolejki();
+			display_menu_operations();
+			break;
+		case 2:
+			Inne();
+			break;
+		case 3:
+			cout << "Wyjscie z programu." << endl;
+			break;
+		}
+		system("PAUSE");
+		system("cls");
+	} while (wybor != 3);
+
+}
+
+
+int main()
+{
+	setlocale(LC_CTYPE, "Polish");
+	display_menu();
+
+	return 0;
+}
+
+
+
+/*zakres wiedzy - syllabus
+Dynamiczne struktury danych (kolejka)
+Implementacja wybranych algorytm¢w sortowania tablic
+Zˆo¾ono˜† obliczeniowa - por¢wnanie wybranych algorytm¢w sortowania
+Zapis danych z plik¢w.
+Dynamiczna alokacja pami©ci.
+Struktury, pola bitowe
+Przegl¥d wybranych bibliotek.
+Szablony funkcji
+Inne(warto˜ci pseudolosowe, p©tle, tablice, wska«niki, wektory etc)*/

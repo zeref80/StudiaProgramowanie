@@ -1,0 +1,3 @@
+﻿  Kolejka.cpp
+c:\users\adam\documents\github\studiaprogramowanie\kolejka\kolejka\kolejka\kolejka.cpp(148): warning C4101: "ilosc_elementow_do_zerowania": lokalna zmienna, do której nie istnieje odwołanie
+  Kolejka.vcxproj -> C:\Users\Adam\Documents\GitHub\StudiaProgramowanie\Kolejka\Kolejka\x64\Debug\Kolejka.exe

@@ -1,0 +1,15 @@
+# depslib dependency file v1.0
+1590962137 source:c:\users\adam\documents\github\studiaprogramowanie\kolejka\kolejka\kolejka\kolejka.cpp
+	<queue>
+	<iostream>
+	<conio.h>
+	<algorithm>
+	<vector>
+	<cstdlib>
+	<locale.h>
+
+1590962137 source:c:\users\adam\documents\github\studiaprogramowanie\kolejka\kolejka\kolejka\pch.cpp
+	"pch.h"
+
+1590962137 c:\users\adam\documents\github\studiaprogramowanie\kolejka\kolejka\kolejka\pch.h
+
